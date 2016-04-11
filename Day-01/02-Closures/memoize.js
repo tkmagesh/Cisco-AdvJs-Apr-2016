@@ -2,7 +2,6 @@ function memoize(fn){
 	var cache = {};
 	
 	return function(n){
-		console.log(cache);
 		if (typeof cache[n] === 'undefined')
 			cache[n] = fn(n);
 		console.log(cache);
@@ -24,3 +23,28 @@ var isEvenOrOdd = memoize(function isOddOrEven(n){
 		return 'even';
 	return 'odd';
 })
+
+function memoize(fn){
+	var cache = {};
+	return function(){
+		var key = JSON.stringify(arguments);
+		if (typeof cache[key] === 'undefined')
+			cache[key] = fn.apply(this,arguments);
+		return cache[key];
+	}
+}
+
+var cachedAdd = memoize(function(x,y){
+  console.log('processing ', x , ' and ', y);
+  return x + y;
+});
+
+cachedAdd(10,20);
+cachedAdd(10,200);
+cachedAdd(100,20);
+cachedAdd(100,200);
+
+cachedAdd(10,20);
+cachedAdd(10,200);
+cachedAdd(100,20);
+cachedAdd(100,200);
