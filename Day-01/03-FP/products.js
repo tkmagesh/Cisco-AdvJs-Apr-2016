@@ -90,5 +90,78 @@ print("Sorting", function(){
 	})
 });
 
-//print("Filtering", )
+print("Filtering", function(){
+	print("Default [costly products ( cost > 50 )]", function(){
+		function filterCostlyProducts(){
+			var result = [];
+			for(var i=0; i<products.length; i++)
+				if (products[i].cost > 50)
+					result.push(products[i]);
+			return result;
+		}
+		var costlyProducts = filterCostlyProducts();
+		console.table(costlyProducts);
+	});
+
+	print("Filter any list by any criteria", function(){
+		function filter(list, criteriaFn){
+			var result = [];
+			for(var i=0; i<list.length; i++)
+				if (criteriaFn(list[i]))
+					result.push(list[i]);
+			return result;
+		}
+
+		function negate(criteriaFn){
+			return function(){
+				return !criteriaFn.apply(this, arguments);
+			};
+		}
+
+		var costlyProductCriteria = function(product){
+			return product.cost > 50;
+		};
+
+		print("All costly products [cost > 50]", function(){
+			var costlyProducts = filter(products, costlyProductCriteria);
+			console.table(costlyProducts);
+		});
+
+		/*var affordableProductCriteria = function(product){
+			return product.cost <= 50;
+		};*/
+		/*var affordableProductCriteria = function(product){
+			return !costlyProductCriteria(product);
+		}*/
+
+		var affordableProductCriteria = negate(costlyProductCriteria);
+
+		print("All affordable products [cost <= 50 (or) !costlyProducts]", function(){
+			var affordableproducts = filter(products, affordableProductCriteria);
+			console.table(affordableproducts);
+		});
+
+
+		var category1ProductCriteria = function(product){
+			return product.category === 1;
+		};
+		print("All category 1 products", function(){
+			var category1Products = filter(products, category1ProductCriteria);
+			console.table(category1Products);
+		});
+
+		/*var nonCategory1ProductCriteria = function(product){
+			return product.category !== 1;
+		};*/
+		/*var nonCategory1ProductCriteria = function(product){
+			return !category1ProductCriteria(product);
+		};*/
+		var nonCategory1ProductCriteria = negate(category1ProductCriteria);
+		
+		print("Non category 1 poroducts", function(){
+			var nonCatgeory1Products = filter(products, nonCategory1ProductCriteria);
+			console.table(nonCatgeory1Products);
+		});
+	});
+});
 
