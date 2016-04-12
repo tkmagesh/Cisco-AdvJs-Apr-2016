@@ -4,8 +4,24 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<script src="dist/script.js"></script>
+	<script>
+	var employees = [];
+	function Employee(id, name){
+		this.id = id;
+		this.name = name;
+	}
+	window.addEventListener("DOMContentLoaded", init);
+	function init(){
+		document.getElementById("btnClick").addEventListener("click", onBtnClick);
+	}
+	function onBtnClick(){
+		for(var i=0; i<10000; i++)
+			employees.push(new Employee(100, 'Magesh'));
+		console.log("done");
+	}
+	</script>
 </head>
 <body>
-	
+	<input type="button" value="Click Me" id="btnClick">
 </body>
 </html>

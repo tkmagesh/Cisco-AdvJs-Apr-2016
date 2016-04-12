@@ -50,7 +50,19 @@ class Employee{
 	display(){
 		console.log(`id = ${this.id}, name = ${this.name}, salary = ${this.salary}`)
 	}
+	static isEmployee(obj){
+		return obj instanceof Employee;
+	}
 }
 
 var emp = new Employee(100, 'Magesh', 10000);
 emp.display();
+console.log(Employee.isEmployee(emp));
+
+import Product from './Product.js'
+var p = new Product(100, 'Pen', 10);
+p.display();
+
+console.log('modifying id');
+p.id = 200;
+p.display();
